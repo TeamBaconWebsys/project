@@ -27,10 +27,58 @@
     <link rel="stylesheet" href="/assets/style.css">
     <script src="/assets/script.js" async></script>
 
-    <title>Soup Kitchen</title>
+    <title>@username</title>
   </head>
 
   <body>
-    
+    <!--Navigation Bar-->
+
+    <!--About me of the User-->
+    <div id="aboutMe" class="card">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="https://images.pexels.com/photos/3136161/pexels-photo-3136161.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" id="pfp" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h3 class="card-title">@username</h3>
+            <a href="#" class="btn" role="button" aria-pressed="true">Following</a>
+            <a href="#" class="btn" role="button" aria-pressed="true">Followers</a>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum, diam sed sollicitudin semper, velit tellus pulvinar lorem, non blandit neque tortor eu nisl.
+            </p>
+            <a class="btn btn-dark" role="button" aria-pressed="true">Follow</a>
+            <a class="btn btn-dark" role="button" aria-pressed="true">Request Commissions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="artistPNG">
+      <div id="btnGroup" class="btn-group" role="group">
+        <button id="sketches" type="button" class="btn clicked">Sketches</button>
+        <button id="commissions" type="button" class="btn">Commissioned Works</button>
+        <button id="gallery" type="button" class="btn">Gallery</button>
+      </div>
+
+      <!--going to use ajax to dynamically put the data in-->
+      <div id="sketchesPNG" class="show">
+        <img src="pictures/drawing1.jpg" alt=""/> 
+        <img src="pictures/sketch2.jpg" alt=""/>
+      </div>
+      <div id="commissionsPNG" class="hide">
+        <img src="pictures/commission1.jpg" alt=""/>
+        <img src="https://images.pexels.com/photos/948620/pexels-photo-948620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt=""/>
+      </div>
+      <div id="galleryPNG" class="hide">
+        <img src="pictures/drawing1.jpg" alt=""/> 
+        <img src="pictures/sketch2.jpg" alt=""/>
+        <img src="pictures/commission1.jpg" alt=""/>
+        <img src="https://images.pexels.com/photos/948620/pexels-photo-948620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt=""/>
+      </div>
+
+    </div>
+
   </body>
+
 </html>
