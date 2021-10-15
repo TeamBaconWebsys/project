@@ -1,0 +1,68 @@
+
+/*Profile Page CSS*/
+#pfp{
+  width: 225px;
+  height:auto;
+}
+#aboutMe{
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 20px;
+
+  background-color: #FFCDB2;
+  border: #FFCDB2;
+  box-shadow: 15px 10px 2px 0px #FFB4A2;
+}
+#aboutMe .btn-dark{
+  background-color: #FFB4A2;
+  border: #FFB4A2;
+  color: #000;
+}
+
+#aboutMe .btn-dark:hover{
+  background-color: #6D6875;
+  border: #6D6875;
+  color: #FFF;
+}
+
+#artistPNG{
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 75%;
+  padding: 10px;
+  background-color: #E5989B;
+  border-radius: 3px;
+  box-shadow: 15px 10px 2px 0px #FFB4A2;
+}
+
+#btnGroup{
+  width: 100%;
+}
+#btnGroup .btn{
+  background-color: #6D6875;
+  color: #FFF;
+  font-size: 20px;
+}
+.clicked{
+  background-color: #B5838D !important;
+  box-shadow: inset -2px 2px 1px 1px #995C68;
+}
+#btnGroup .btn:active, #btnGroup .btn:hover{
+  background-color: #B5838D !important;
+  box-shadow: inset -2px 2px 1px 1px #995C68 !important;
+}
+#sketchesPNG, #commissionsPNG, #galleryPNG{
+  margin: 20px;
+}
+#sketchesPNG img, #commissionsPNG img, #galleryPNG img{
+  box-shadow: 5px 0px 3px 1px #6D6875;
+  margin: 10px ;
+  height: 200px;
+}
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}
