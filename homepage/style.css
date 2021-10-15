@@ -1,0 +1,14 @@
+.image {
+  position: relative;
+}
+
+.image img {
+  display: block;
+}
+
+.image i {
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+  color: white;
+}

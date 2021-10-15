@@ -32,12 +32,42 @@
 
   <body>
     <!--Navigation Bar-->
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" id="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/index.html"><img src="/images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav link-dark">
+            <a class="nav-link" aria-current="page" href="/homepage/foryou.html">soup.kitchen</a>
+            <a class="nav-link" href="/homepage/saved.html">Saved</a>
+            <a class="nav-link" href="/homepage/following.html">Following</a>
+            <a class="nav-link" href="/homepage/followers.html">Followers</a>
+            <a class="nav-link" href="/homepage/notif.html">Notifications</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            username
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="profile/profile.html">Profile</a>
+            <a class="dropdown-item" href="homepage/settings.html">Settings</a>
+            <a class="dropdown-item" href="index.html">Log Out</a>
+          </div>
+        </div>
+      </div>
+    </nav>
 
     <!--About me of the User-->
     <div id="aboutMe" class="card">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="https://images.pexels.com/photos/3136161/pexels-photo-3136161.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" id="pfp" class="img-fluid rounded-start" alt="...">
+          <img src="https://images.pexels.com/photos/3136161/pexels-photo-3136161.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            id="pfp" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
           <div class="card-body">
@@ -45,7 +75,8 @@
             <a href="#" class="btn" role="button" aria-pressed="true">Following</a>
             <a href="#" class="btn" role="button" aria-pressed="true">Followers</a>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum, diam sed sollicitudin semper, velit tellus pulvinar lorem, non blandit neque tortor eu nisl.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum, diam sed sollicitudin semper, velit tellus
+              pulvinar lorem, non blandit neque tortor eu nisl.
             </p>
             <a class="btn btn-dark" role="button" aria-pressed="true">Follow</a>
             <a class="btn btn-dark" role="button" aria-pressed="true">Request Commissions</a>
@@ -63,18 +94,18 @@
 
       <!--going to use ajax to dynamically put the data in-->
       <div id="sketchesPNG" class="show">
-        <img src="pictures/drawing1.jpg" alt=""/> 
-        <img src="pictures/sketch2.jpg" alt=""/>
+        <img src="pictures/drawing1.jpg" alt="" />
+        <img src="pictures/sketch2.jpg" alt="" />
       </div>
       <div id="commissionsPNG" class="hide">
-        <img src="pictures/commission1.jpg" alt=""/>
-        <img src="https://images.pexels.com/photos/948620/pexels-photo-948620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt=""/>
+        <img src="pictures/commission1.jpg" alt="" />
+        <img src="https://images.pexels.com/photos/948620/pexels-photo-948620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" />
       </div>
       <div id="galleryPNG" class="hide">
-        <img src="pictures/drawing1.jpg" alt=""/> 
-        <img src="pictures/sketch2.jpg" alt=""/>
-        <img src="pictures/commission1.jpg" alt=""/>
-        <img src="https://images.pexels.com/photos/948620/pexels-photo-948620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt=""/>
+        <img src="pictures/drawing1.jpg" alt="" />
+        <img src="pictures/sketch2.jpg" alt="" />
+        <img src="pictures/commission1.jpg" alt="" />
+        <img src="https://images.pexels.com/photos/948620/pexels-photo-948620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" />
       </div>
 
     </div>
