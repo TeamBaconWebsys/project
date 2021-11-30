@@ -27,6 +27,23 @@
     <link rel="stylesheet" href="/assets/style.css">
     <script src="/assets/script.js" async></script>
 
+    <!--Inner CSS is NOT permanent. Wanted to get everything working first before I combined this code with the CSS file.-->
+    <style>
+      ul li{
+        list-style: none;
+        background: rgb(228, 228, 228);
+        margin: 2px;
+        border-radius: 5px;
+        padding: 5px;
+      }
+      .deleteMe{
+        float: right;
+        background: rgb(194, 41, 30);
+        border-radius: 30px;
+        color: white;
+      }
+    </style>
+
     <title>Soup Kitchen</title>
   </head>
 
@@ -60,9 +77,37 @@
         </div>
       </div>
     </nav>
-    <h1 class="display-3 text-center">Followers</h1>
+    <h1 class="display-3 text-center">Following</h1>
     <br>
-    <h3 class="text-center"> You have no followers!</h3>
+    <ul>
+      <li>KoolArts <div class='deleteMe'> X </div></li>
+      <li>PaintPanda <div class='deleteMe'> X </div></li>
+      <li>SketchSnake <div class='deleteMe'> X </div></li>
+      <li>PhotoFan <div class='deleteMe'> X </div></li>
+      <li>ArtsOfficial <div class='deleteMe'> X </div></li>
+  </ul>
+    <!--
+    <div class="container">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="list-group list-group-flush">
+            <a href="/profile/profile.html" class="list-group-item list-group-item-action" aria-current="true">
+              Super_Cool_Artist
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Artist #2</a>
+            <a href="#" class="list-group-item list-group-item-action">Artist #3</a>
+            <a href="#" class="list-group-item list-group-item-action">Artist #4</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+    <h1 class="display-3 text-center">Followers</h1>
+    <ul>
+      <li>ProPhotos <div class='deleteMe'> X </div></li>
+      <li>PaintGuru<div class='deleteMe'> X </div></li>
+      <li>SmartArtist<div class='deleteMe'> X </div></li>
+    </ul>
 
   </body>
 
