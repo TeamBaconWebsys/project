@@ -29,5 +29,9 @@ $(document).ready(function(){
     $("#gallery").addClass("clicked")
     $("#galleryPNG").addClass("show");
   });
+  
+    $(".deleteMe").on("click", function(){
+    $(this).closest("li").remove(); 
+  });
 
 });
