@@ -31,12 +31,12 @@ function check_inputs_set($arr) {
 
 // If a user is trying to login (they can use either their username or their email to login)
 if (isset($_POST['login']) && check_inputs_set(['username_email', 'password'])) {
-  $username_email = validate($_POST['username']);
+  $username_email = validate($_POST['username_email']);
   $pass = validate($_POST['password']);
 
   // Error if either username or password is required
   if (empty($username_email)) {
-    header("Location: login.php?error=Username/Email is required");
+    header("Location: login.php?error=Username or Email is required");
   }
   else if(empty($pass)) {
     header("Location: login.php?error=Password is required");
@@ -74,7 +74,7 @@ else if (isset($_POST['register']) && check_inputs_set(['email', 'username', 'pa
   $pass = validate($_POST['password']);
 
   // extra stuff because display name is optional
-  $display_name = ''
+  $display_name = '';
   if (isset($_POST['display_name'])) {
     $display_name = validate($_POST['display_name']);
   }
