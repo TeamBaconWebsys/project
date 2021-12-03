@@ -68,11 +68,11 @@ else if (isset($_POST['register']) && isset($_POST['username']) && isset($_POST[
     return $data;
   }
 
-  $uname = validate($_POST['username']);
+  $username = validate($_POST['username']);
   $pass = validate($_POST['password']);
 
-  // Error if either username or password is required
-  if (empty($uname)) {
+  // Error if there are missing fields
+  if (empty($username)) {
     header("Location: register.php?error=Username is required");
   }
   else if(empty($pass)) {
@@ -82,7 +82,7 @@ else if (isset($_POST['register']) && isset($_POST['username']) && isset($_POST[
   else {
     // Check to make sure the username isn't taken
     $pstmt = $conn->prepare("SELECT * FROM accounts WHERE username=:username");
-    $pstmt->execute(array(':username' => $uname));
+    $pstmt->execute(array(':username' => $username));
     $result = $pstmt->fetchAll();
 
     // Error if the username is taken
@@ -93,7 +93,7 @@ else if (isset($_POST['register']) && isset($_POST['username']) && isset($_POST[
     else {
       $pstmt = $conn->prepare("INSERT INTO accounts (username, password)
                               VALUES(:username, :password)");
-      $result = $pstmt->execute(array(':username' => $uname, ':password' => password_hash($pass, PASSWORD_DEFAULT)));
+      $result = $pstmt->execute(array(':username' => $username, ':password' => password_hash($pass, PASSWORD_DEFAULT)));
       // If there was somehow a DB error
       if (!$result) {
         header("Location: register.php?error=Couldn't create new user");
