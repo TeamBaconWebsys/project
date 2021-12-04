@@ -1,103 +1,68 @@
+<?php
+  $dbhost= "localhost";
+  $dbname = "soup.kitchen";
+  $dbusername= "root";
+  $dbpassword = "";
+  
+  $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
+  // Check connection
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  } 
 
-<!DOCTYPE html>
-<html lang="en">
+  $id='1';
+  #not sure where to get the id from? probably from clicking the image --> sends over the id, then the php page will retrieve it
+  
+  #initialize the arrays 
+  $post_array = array();
+  $tag_array = array();
+  $user_array = array();
+  $user_id = '0';
 
-  <head>
-    <!-- meta tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  #get the post item from the database
+  $sql = "SELECT * FROM posts WHERE post_id='1'";
+  $result = $conn->query($sql);
+  if($result){echo "success!\n";}
+  else { echo "Error" . $conn->error; }
 
-    <!-- getting fonts and fontawesome icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto+Slab&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/4bfa365d66.js" crossorigin="anonymous" defer></script>
+  if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+      array_push($post_array, $row);
+      $user_id = $row['user_id'];
+    }
+  }
+  
+  #get the post tags from the database
+  $tag_sql = "SELECT * FROM tags WHERE post_id=$id";
+  $result = $conn->query($tag_sql);
 
-    <!-- jQuery -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-    <script src="https://code.jquery.com/jquery-1.12.4.js" defer></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
+  if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+      array_push($tag_array, $row);
+    }
+  }
+  
+  #get the user who uploaded the post from the database
+  $user_sql = "SELECT username from accounts WHERE user_id=$user_id";
+  $result = $conn->query($user_sql);
+  if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+      array_push($user_array, $row);
+    }
+  }
+  $conn->close();
 
-    <!-- Bootstrap 5 stylesheet and JS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous" defer></script>
+  $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array);
 
-    <!--custom CSS and JS-->
-    <link rel="stylesheet" href="assets/style.css">
-    <script src="assets/script.js" async></script>
-
-    <title><? echo $pageTitle;?></title>
-  </head>
-  <body>
-    <?php
-      $conn = mysql_connect('localhost', 'root', 'password123') ;
-      mysql_select_db('websys_project');
-
-      $dbOk = false;
-      
-      if ($conn->connect_error) {
-        echo '<div class="messages">Could not connect to the database. Error: ';
-        echo $conn->connect_errno . ' - ' . $conn->connect_error . '</div>';
-      } else {
-        $dbOk = true; 
+  foreach($array as $index => $value){
+    foreach($value as $type => $content){
+      foreach($content as $key => $x){
+        echo "$x\n";
       }
+    }
+  }
 
-      $id=$_GET['id'];
-      #not sure where to get the id from? probably from clicking the image --> sends over the id, then the php page will retrieve it
-      $sql = "SELECT * FROM posts WHERE id=$id";
-      $result = mysql_query($sql);
-      mysql_close($conn);
-      $row = mysql_fetch_assoc($result);
-
-      $pageTitle = $row['name'];
-      $image = $row['img'];
-      echo($row['img']);
-    ?>
-
-    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html"><img src="/images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="/homepage/foryou.html">soup.kitchen</a>
-            <a class="nav-link" href="/homepage/saved.html">Saved</a>
-            <a class="nav-link" href="/homepage/following.html">Following</a>
-            <a class="nav-link" href="/homepage/followers.html">Followers</a>
-            <a class="nav-link" href="/homepage/notif.html">Notifications</a>
-          </div>
-        </div>
-        <div class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            username
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Log Out</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div id="postBody" class="Container">
-      <div id="postContainer" class="card">
-        <?echo '<img src="'.$image.'" alt="image" style="width:75%;height:40%">';?>
-        <div id="postTitle" class="card-body">
-          <h3 class="card-title"><? echo $pageTitle;?></h3>
-          <!--maybe tags?-->
-          <?
-            $tag='1';
-          ?>
-        </div>
-      </div>
-    </div>
-  </body>
-
-</html>
+  $send = json_encode($array);
+  header('Content-type: application/json');
+  echo $send;
+?>
