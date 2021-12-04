@@ -1,4 +1,3 @@
-
 /*Profile Page CSS*/
 #pfp{
   width: 225px;
@@ -67,23 +66,23 @@
   display: block;
 }
 .first-time {
-    background-color:#fce373;
+  background-color:#fce373;
 }
 
 .first-time h1 {
-    margin-top: 50px;
-    margin-bottom: 20px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .buttons a {
-    margin: 20px 0px 20px 0px;
+  margin: 20px 0px 20px 0px;
 }
 
 #wrapper
@@ -101,32 +100,32 @@
 }
 #wrapper h1 p
 {
-font-size:18px;
+  font-size:18px;
 }
 .form_div
 {
-width:330px;
-margin-left:320px;
-padding:10px;
-background-color:rgb(35, 31, 32);
+  width:330px;
+  margin-left:320px;
+  padding:10px;
+  background-color:rgb(35, 31, 32);
 }
 .form_div .form_label
 {
-margin:15px;
-margin-bottom:30px;
-font-size:25px;
-font-weight:bold;
-color:white;
-text-decoration:underline;
+  margin:15px;
+  margin-bottom:30px;
+  font-size:25px;
+  font-weight:bold;
+  color:white;
+  text-decoration:underline;
 }
 .form_div input[type="text"],input[type="password"]
 {
-width:230px;
-height:40px;
-border-radius:2px;
-font-size:17px;
-padding-left:5px;
-border:none;
+  width:230px;
+  height:40px;
+  border-radius:2px;
+  font-size:17px;
+  padding-left:5px;
+  border:none;
 }
 
 /* Navbar CSS */
@@ -153,11 +152,9 @@ border:none;
 .link-dark a::before {
   background-color: #000;
 }
-
 .link-light a::before {
   background-color: #fff;
 }
-
 .navbar-nav a:hover::before {
   transform: scaleX(1);
 }
