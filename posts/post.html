@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-1.12.4.js" ></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
-    <!--Date format JQuery-->
+
+    <!--
+      Date format JQuery
+      Link/Source: https://github.com/phstc/jquery-dateFormat
+    -->
     <script src="../assets/jquery-dateformat.min.js"></script>
 
     <!-- Bootstrap 5 stylesheet and JS -->
@@ -32,7 +36,6 @@
   </head>
   <body>
     
-
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="/index.html"><img src="../images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
@@ -65,10 +68,18 @@
 
     <div id="postBody" class="Container">
       <div id="postContainer" class="card">
-        
-        <div id="postTitle" class="card-body">
+        <div id="postImg"></div>
+        <div id="postContent" class="card-body">
+          <div class="row">
+            <div id="postTitle" class="col"></div>
+            <div id="postDate" class="col"></div>
+          </div>
+          <div id="postTag">
+            <b>Tags:</b>
+          </div>
         </div>
       </div>
+      <button id="favoritePost" class="btn">Favorite</button>
     </div>
   </body>
 

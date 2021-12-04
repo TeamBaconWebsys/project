@@ -22,8 +22,7 @@
   #get the post item from the database
   $sql = "SELECT * FROM posts WHERE post_id='1'";
   $result = $conn->query($sql);
-  if($result){echo "success!\n";}
-  else { echo "Error" . $conn->error; }
+  if(!$result) { echo "Error" . $conn->error; }
 
   if ($result->num_rows > 0){
     while($row = $result->fetch_assoc()){
@@ -52,16 +51,17 @@
   }
   $conn->close();
 
+  //get the different items that were gotten and puts them in an array, with the keys being the different content.
   $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array);
-
-  foreach($array as $index => $value){
+  /*foreach($array as $index => $value){
     foreach($value as $type => $content){
       foreach($content as $key => $x){
         echo "$x\n";
       }
     }
-  }
+  }*/
 
+  //get $array, and then send it as a JSON file.
   $send = json_encode($array);
   header('Content-type: application/json');
   echo $send;

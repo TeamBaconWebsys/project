@@ -131,33 +131,48 @@ border:none;
 
 /* Navbar CSS */
 .navbar {
-    transition: 0.25s;
-  }
-  
-  .navbar-nav a {
-    position: relative;
-  }
-  
-  .navbar-nav a::before {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-  
-  .link-dark a::before {
-    background-color: #000;
-  }
-  
-  .link-light a::before {
-    background-color: #fff;
-  }
-  
-  .navbar-nav a:hover::before {
-    transform: scaleX(1);
-  }
+  transition: 0.25s;
+}
+
+.navbar-nav a {
+  position: relative;
+}
+
+.navbar-nav a::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.link-dark a::before {
+  background-color: #000;
+}
+
+.link-light a::before {
+  background-color: #fff;
+}
+
+.navbar-nav a:hover::before {
+  transform: scaleX(1);
+}
+
+/*Post CSS*/
+#postBody{
+  top: 30px;
+  padding-bottom: 40px;
+}
+#postBody div{
+  margin: 30px;
+}
+#postImg img{
+  width: 50%;
+}
+.tagBtn{
+  background-color: #fce373 !important;
+}

@@ -40,50 +40,35 @@ $(document).ready(function(){
     dataType: "json",
     contentType: "application/json",
   }).done(function(data) {
-    $.each(data, function(key, value){
-  
-      var id;
-      var user;
 
-      var title = value[0][0]['title'];
-      document.title = title;
+    /* the Post Data being displayed + changing the title up
+      Grabbing different items within the JSON that was being sent over.
+    */
+    var id = data['post'][0]['post_id'];
+    var user = data['post'][0]['user_id'];
+    var username = data['user'][0]['username'];
+    var image = data['post'][0]['image_link'];
+    var upload_date = $.format.date(data['post'][0]['upload_date'], "MMM/dd/yyyy");
+    var title = data['post'][0]['title'];
+    document.title = title;
 
-      console.log(value['post']['title']);
+    var post_img = '<img src="' + image + '" class="card-img rounded mx-auto d-block" alt="'+ title + '"/>';
+    var post_title = '<h3>' + title + ' by ' + username + '</h3>';
+    var upload = '<p class="date float-end" >' + upload_date + '</p>';
 
-      if (key == 0){
-        
-        id = value[key][0]['post_id'];
-        user = value[key][0]['user_id'];
-        var image = value[key][0]['image_link'];
-        var upload_date = $.format.date(value[key][0]['upload_date'], "MMM/d/yyyy");
-  
-  
-        var post_img = '<img href="' + image + '" class="post-img" alt="'+ title + '"/>';
-        var post_title = '<h3 class="post-title>' + title + '</h3>';
-        var upload = '<p class="date">' + upload_date + '</p>';
-  
-        var post = post_img + post_title + upload;
-  
-        $("#postTitle").append(post);
-      }
-      /* the Post Data being displayed + changing the title up */
-      /*var title = value['title'];
-      var id = value['post_id'];
-      var user = value['user_id'];
-      var image = value['image_link'];
-      var upload_date = $.format.date(value['upload_date'], "MMM/d/yyyy");
-  
-      var insert_title = '<title>'+ title + '</title>';
-  
-      var post_img = '<img href="' + image + '" class="post-img" alt="'+ title + '"/>';
-      var post_title = '<h3 class="post-title>' + title + '</h3>';
-      var upload = '<p class="date">' + upload_date + '</p>';
-  
-      var post = post_title + upload;
-  
-      $("#postTitle").append(post);
-      $("#postContainer").append(post_img);*/
-    });
-  
+    $("#postImg").append(post_img);
+    $("#postTitle").append(post_title);
+    $("#postDate").append(upload);
+
+    /* End Post data upload */
+
+    /* Start tags uploads */
+    var tags = "<div class='btn-group'>";
+    for (let i = 0; i < data['tag'].length; i++) {
+      console.log(data['tag'][i]['tag']);
+      tags = tags + '<button class="btn tagBtn">' + data['tag'][i]['tag'] + '</button>';
+    }
+    tags = tags + "</div>"
+    $("#postTag").append(tags)
   });
 });
