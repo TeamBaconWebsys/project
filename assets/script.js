@@ -48,13 +48,13 @@ $(document).ready(function(){
     //var user = data['post'][0]['user_id'];
     var username = data['user'][0]['username'];
     var image = data['post'][0]['image_link'];
-    var upload_date = $.format.date(data['post'][0]['upload_date'], "MMM/dd/yyyy");
+    var upload_date = $.format.date(data['post'][0]['upload_date'], "MMM dd, yyyy");
     var title = data['post'][0]['title'];
     document.title = title;
 
     var post_img = '<img src="' + image + '" class="card-img rounded mx-auto d-block" alt="'+ title + '"/>';
     var post_title = '<h3>' + title + ' by ' + username + '</h3>';
-    var upload = '<p class="date float-end" >' + upload_date + '</p>';
+    var upload = '<p class="date" >' + upload_date + '</p>';
 
     $("#postImg").append(post_img);
     $("#postTitle").append(post_title);

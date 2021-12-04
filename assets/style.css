@@ -1,3 +1,5 @@
+
+
 /*Profile Page CSS*/
 #pfp{
   width: 225px;
@@ -163,13 +165,22 @@
 #postBody{
   top: 30px;
   padding-bottom: 40px;
+  margin:30px;
 }
-#postBody div{
-  margin: 30px;
+#postBody .card{
+  border: none;
 }
 #postImg img{
   width: 50%;
 }
 .tagBtn{
   background-color: #fce373 !important;
+  margin: 0px;
+}
+.tagBtn:hover{
+  background-color: #C6C8EE !important;
+}
+
+#favoritePost{
+  padding: 0px;
 }

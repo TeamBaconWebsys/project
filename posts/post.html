@@ -30,7 +30,7 @@
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous" defer></script>
 
     <!--custom CSS and JS-->
-    <link rel="stylesheet" href="../assets/style.css">
+    <link type="text/css" rel="stylesheet" href="../assets/style.css">
     <script src="../assets/script.js" async></script>
 
   </head>
@@ -66,16 +66,16 @@
       </div>
     </nav>
 
-    <div id="postBody" class="Container">
+    <div id="postBody" class="container">
       <div id="postContainer" class="card">
         <div id="postImg"></div>
         <div id="postContent" class="card-body">
           <div class="row">
-            <div id="postTitle" class="col"></div>
-            <div id="postDate" class="col"></div>
-            <div class="col text-center">
-              <button id="favoritePost" class="btn tagBtn">
-                Favorites
+            <div id="postTitle" class="col-md-8"></div>
+            <div id="postDate" class="col-md-2"></div>
+            <div id="favoritePost" class="col-md-2">
+              <button class="btn tagBtn">
+                Favorite
               </button>
             </div>
           </div>

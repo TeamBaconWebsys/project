@@ -59,6 +59,7 @@
         echo "$x\n";
       }
     }
+    -send id as query string --> get post_id from it
   }*/
 
   //get $array, and then send it as a JSON file.
