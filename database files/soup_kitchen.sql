@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2021 at 06:42 PM
+-- Generation Time: Dec 05, 2021 at 02:09 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -21,6 +21,10 @@ SET time_zone = "+00:00";
 -- Database: `soup.kitchen`
 --
 
+-- Clean/replace data
+DROP DATABASE IF EXISTS `soup.kitchen`;
+CREATE DATABASE `soup.kitchen`;
+
 -- --------------------------------------------------------
 
 --
@@ -37,6 +41,15 @@ CREATE TABLE `accounts` (
   `bio` varchar(512) DEFAULT NULL,
   `privilege` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`user_id`, `username`, `email`, `display_name`, `password`, `profile_pic`, `bio`, `privilege`) VALUES
+(1, 'callum', 'callumhauber@gmail.com', 'callum', '$2y$10$kTksHOhYdL4r0zIvk1o/cOeF6NQYJ4JY5zLPvLi3tpzFfPOcS96L2', NULL, NULL, 0),
+(2, 'nic', 'nics_email@rpi.edu', 'Nic', '$2y$10$gfn7LWgVXJlSspD2XiAuHeypcbfCnD4HHUHc0RSnxMD458de.5DK.', NULL, NULL, 0),
+(3, 'classmate', 'email@email.com', 'Classmate Username', '$2y$10$3P.Kll/7fQh/kqn1plNkze5L5jkBb2sWuo5rT7J/OeX6TTDqy.1a2', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -58,6 +71,21 @@ CREATE TABLE `favorites` (
 CREATE TABLE `followers` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `follower_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notif_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(48) NOT NULL,
+  `other_user_id` int(10) UNSIGNED NOT NULL,
+  `post_id` int(10) UNSIGNED DEFAULT NULL,
+  `viewed` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -112,6 +140,14 @@ ALTER TABLE `followers`
   ADD UNIQUE KEY `follower_id` (`follower_id`,`user_id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `other_user_id` (`other_user_id`),
+  ADD KEY `post_id` (`post_id`);
+
+--
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
@@ -158,6 +194,14 @@ ALTER TABLE `favorites`
 ALTER TABLE `followers`
   ADD CONSTRAINT `followers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`),
   ADD CONSTRAINT `followers_ibfk_2` FOREIGN KEY (`follower_id`) REFERENCES `accounts` (`user_id`);
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`),
+  ADD CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`other_user_id`) REFERENCES `accounts` (`user_id`),
+  ADD CONSTRAINT `notifications_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
 
 --
 -- Constraints for table `posts`
