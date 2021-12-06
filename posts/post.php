@@ -11,6 +11,7 @@
     die("Connection failed: " . $conn->connect_error);
   } 
 
+  //-send id as query string --> get post_id from it
   $id='1';
   #not sure where to get the id from? probably from clicking the image --> sends over the id, then the php page will retrieve it
   
@@ -66,30 +67,25 @@
   }
 
   array_push($favorite_array, $user_id);
-  $conn->close();
+  
 
   //get the different items that were gotten and puts them in an array, with the keys being the different content.
   $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array, 'favorite'=>$favorite_array);
-  /*foreach($array as $index => $value){
-    foreach($value as $type => $content){
-      foreach($content as $key => $x){
-        echo "$x\n";
-      }
-    }
-    -send id as query string --> get post_id from it
-  }*/
-
-  /*foreach ($array['post'] as $index => $value){
-    echo "$index";
-    foreach($value as $x => $y){
-      echo "$x: $y";
-    }
-  }*/
   
-  //get $array, and then send it as a JSON file.
-  #$send = json_encode($array);
-  #header('Content-type: application/json');
-  #echo $send;
+  if (isset($_POST['Favorite'])){
+    if($array['favorite'][0] == 'true' && isset($_SESSION['user_id'])){
+      $delete_sql = "DELETE FROM favorites WHERE user_id=$user_id AND post_id=$id";
+      $result = $conn->query($delete_sql);
+    } else if ($array['favorite'][0] == 'false' && isset($_SESSION['user_id'])){
+      $add_sql = "INSERT INTO favorites (user_id, post_id) VALUES($user_id, $id);";
+    } else{
+      header("Location: ../auth/login.php");
+    }
+
+    header("Refresh:0");
+  }
+
+  $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -110,12 +106,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-1.12.4.js" ></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
-
-    <!--
-      Date format JQuery
-      Link/Source: https://github.com/phstc/jquery-dateFormat
-    -->
-    <script src="../assets/jquery-dateformat.min.js"></script>
 
     <!-- Bootstrap 5 stylesheet and JS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
