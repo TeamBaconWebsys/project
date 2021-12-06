@@ -1,3 +1,6 @@
+### Project Specific
+config.ini
+
 ### VS Code
 .vscode/*
 !.vscode/settings.json
