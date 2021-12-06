@@ -162,6 +162,9 @@
 }
 
 /*Post CSS*/
+body{
+  overflow-x: hidden;
+}
 #postBody{
   top: 30px;
   padding-bottom: 40px;
@@ -173,14 +176,24 @@
 #postImg img{
   width: 50%;
 }
+#postContent .row{
+  margin:20px;
+  margin-bottom: 40px;
+}
 .tagBtn{
   background-color: #fce373 !important;
-  margin: 0px;
 }
-.tagBtn:hover{
+.tagBtn:hover, .notActive:hover{
   background-color: #C6C8EE !important;
+  color: #fff;
 }
-
-#favoritePost{
-  padding: 0px;
+.notActive{
+  background-color: #fce373 !important;
+}
+#isFav .active{
+  background-color: #C6C8EE;
+  color: #FFF;
+}
+.active:hover{
+  background-color: #fce373;
 }
