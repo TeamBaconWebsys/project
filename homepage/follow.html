@@ -70,13 +70,14 @@
           <div class="row justify-content-md-center">
             <div class="col">
               <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
+                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
+                while($row = $stmt->fetch()){
+                    echo "<a href=/profile.html?user=";
+                    echo $row['user_id'];
+                    echo "class='list-group-item list-group-item-action' aria-current='true'>";
+                    echo $row['display_name'];
+                    echo "</a>";
+                }
               ?>
             </div>
             <div class="col col-lg-2">
@@ -84,92 +85,13 @@
                 $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
                 $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
                 $delete = $dbh->prepare($sql);
-                echo "<button type="button" class="btn btn-danger">Remove</button>";
-                $delete -> excute
+                echo "<button type='button' class='btn btn-danger'>Remove</button>";
+                $delete -> excute();
               ?>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-              $delete = $dbh->prepare($sql);
-              echo "<button type="button" class="btn btn-danger">Remove</button>";
-              $delete -> excute
-            ?>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-              $delete = $dbh->prepare($sql);
-              echo "<button type="button" class="btn btn-danger">Remove</button>";
-              $delete -> excute
-            ?>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-              $delete = $dbh->prepare($sql);
-              echo "<button type="button" class="btn btn-danger">Remove</button>";
-              $delete -> excute
-            ?>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <br>
     <!-- Followers List-->
@@ -179,106 +101,28 @@
         <div class="col-6 mx-auto">
           <div class="row justify-content-md-center">
             <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
+                <?php 
+                    $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.follower_id");
+                    while($row = $stmt->fetch()){
+                        echo "<a href=/profile.html?user=";
+                        echo $row['user_id'];
+                        echo "class='list-group-item list-group-item-action' aria-current='true'>";
+                        echo $row['display_name'];
+                        echo "</a>";
+                    }
+                ?>
             </div>
             <div class="col col-lg-2">
-              <?php 
-                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-                $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-                $delete = $dbh->prepare($sql);
-                echo "<button type="button" class="btn btn-danger">Remove</button>";
-                $delete -> excute
-              ?>
+                <?php 
+                    $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
+                    $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
+                    $delete = $dbh->prepare($sql);
+                    echo "<button type='button' class='btn btn-danger'>Remove</button>";
+                    $delete -> excute();
+                ?>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-                $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-                $delete = $dbh->prepare($sql);
-                echo "<button type="button" class="btn btn-danger">Remove</button>";
-                $delete -> excute
-              ?>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-                $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-                $delete = $dbh->prepare($sql);
-                echo "<button type="button" class="btn btn-danger">Remove</button>";
-                $delete -> excute
-              ?>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-              $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-              while($row = $stmt->fetch()){
-                echo "<a href=/";
-                echo accounts.username;
-                echo "/profile.html" class="list-group-item list-group-item-action" aria-current="true">";
-                echo accounts.display_name;
-                echo "</a>";
-              ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-                $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-                $delete = $dbh->prepare($sql);
-                echo "<button type="button" class="btn btn-danger">Remove</button>";
-                $delete -> excute
-              ?>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <br>
   </body>
