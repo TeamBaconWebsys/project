@@ -27,41 +27,23 @@
     <link rel="stylesheet" href="/assets/style.css">
     <script src="/assets/script.js" async></script>
 
-    <!--Inner CSS is NOT permanent. Wanted to get everything working first before I combined this code with the CSS file.-->
-    <style>
-      ul li{
-        list-style: none;
-        background: rgb(228, 228, 228);
-        margin: 2px;
-        border-radius: 5px;
-        padding: 5px;
-      }
-      .deleteMe{
-        float: right;
-        background: rgb(194, 41, 30);
-        border-radius: 30px;
-        color: white;
-      }
-    </style>
-
     <title>Soup Kitchen</title>
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-md navbar-light sticky-top" id="navbar">
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html"><img src="/images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
+        <a class="navbar-brand" href="index.html"><img src="images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="/homepage/foryou.html">soup.kitchen</a>
-            <a class="nav-link" href="/homepage/saved.html">Saved</a>
-            <a class="nav-link" href="/homepage/following.html">Following</a>
-            <a class="nav-link" href="/homepage/followers.html">Followers</a>
-            <a class="nav-link" href="/homepage/notif.html">Notifications</a>
+            <a class="nav-link" aria-current="page" href="foryou.html">soup.kitchen</a>
+            <a class="nav-link" href="saved.html">Saved</a>
+            <a class="nav-link" href="follow.html">Follows</a>
+            <a class="nav-link" href="notif.html">Notifications</a>
           </div>
         </div>
         <div class="nav-item dropdown ">
@@ -70,45 +52,127 @@
             username
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="profile/profile.html">Profile</a>
-            <a class="dropdown-item" href="homepage/settings.html">Settings</a>
-            <a class="dropdown-item" href="index.html">Log Out</a>
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="#">Log Out</a>
           </div>
         </div>
       </div>
     </nav>
+
+    <!-- Following List-->
     <h1 class="display-3 text-center">Following</h1>
     <br>
-    <ul>
-      <li>KoolArts <div class='deleteMe'> X </div></li>
-      <li>PaintPanda <div class='deleteMe'> X </div></li>
-      <li>SketchSnake <div class='deleteMe'> X </div></li>
-      <li>PhotoFan <div class='deleteMe'> X </div></li>
-      <li>ArtsOfficial <div class='deleteMe'> X </div></li>
-  </ul>
-    <!--
     <div class="container">
       <div class="row">
         <div class="col-6 mx-auto">
-          <div class="list-group list-group-flush">
-            <a href="/profile/profile.html" class="list-group-item list-group-item-action" aria-current="true">
-              Super_Cool_Artist
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">Artist #2</a>
-            <a href="#" class="list-group-item list-group-item-action">Artist #3</a>
-            <a href="#" class="list-group-item list-group-item-action">Artist #4</a>
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="/profile/profile.html" class="list-group-item list-group-item-action" aria-current="true">
+                Super_Cool_Artist
+              </a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action">Artist #2</a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action">Artist #3</a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action">Artist #4</a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    -->
-    <h1 class="display-3 text-center">Followers</h1>
-    <ul>
-      <li>ProPhotos <div class='deleteMe'> X </div></li>
-      <li>PaintGuru<div class='deleteMe'> X </div></li>
-      <li>SmartArtist<div class='deleteMe'> X </div></li>
-    </ul>
 
+    <br>
+    <!-- Followers List-->
+    <h1 class="display-3 text-center">Followers</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="/profile/profile.html" class="list-group-item list-group-item-action" aria-current="true">
+                Paint_Panda
+              </a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action">Artist #2</a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action">Artist #3</a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action">Artist #4</a>
+            </div>
+            <div class="col col-lg-2">
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
   </body>
+
 
 </html>
