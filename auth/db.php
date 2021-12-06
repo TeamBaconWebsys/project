@@ -1,18 +1,10 @@
-<?php 
+<?php
+include('../includes/functions.php');
 session_start(); 
 
-$dbhost= "localhost";
-$dbname = "soup.kitchen";
-$dbusername= "root";
-$dbpassword = "gwinifred20";
-
-try {
-  $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbusername, $dbpassword);
-}
-catch (Exception $e) {
-  $err[] = $e->getMessage();
-  echo "Connection failed!";
-}
+$conn = db_connect();
+// where to send the user after logging in
+$send_to = "../index.php";
 
 // user input validation
 function validate($data) {
@@ -22,6 +14,7 @@ function validate($data) {
   return $data;
 }
 
+// give an array of inputs to check if they're set
 function check_inputs_set($arr) {
   foreach ($arr as $val) {
     if (!isset($_POST[$val])) return false;
@@ -56,7 +49,7 @@ if (isset($_POST['login']) && check_inputs_set(['username_email', 'password'])) 
         echo "Logged in!";
         $_SESSION['display_name'] = $row['display_name'];
         $_SESSION['user_id'] = $row['user_id'];
-        header("Location: index.php");
+        header("Location: ".$send_to);
       } else {
         header("Location: login.php?error=Incorrect credentials");
       }
@@ -124,7 +117,7 @@ else if (isset($_POST['register']) && check_inputs_set(['email', 'username', 'pa
   }
 } 
 else {
-  header("Location: index.php");
+  header("Location: ".$send_to);
 }
 exit();
 ?>
