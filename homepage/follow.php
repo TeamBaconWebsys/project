@@ -31,6 +31,11 @@
   </head>
 
   <body>
+    <?php
+        include('../inlcudes/functions.inc.php');
+        session_start();
+        $conn = db_connect();
+    ?>
     <nav class="navbar navbar-expand-md navbar-light sticky-top" id="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="/index.html"><img src="/images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
@@ -70,7 +75,7 @@
           <div class="row justify-content-md-center">
             <div class="col">
               <?php 
-                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
+                $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
                 while($row = $stmt->fetch()){
                     echo "<a href=/profile.html?user=";
                     echo $row['user_id'];
@@ -82,7 +87,7 @@
             </div>
             <div class="col col-lg-2">
               <?php 
-                $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
+                $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
                 $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
                 $delete = $dbh->prepare($sql);
                 echo "<button type='button' class='btn btn-danger'>Remove</button>";
@@ -102,7 +107,7 @@
           <div class="row justify-content-md-center">
             <div class="col">
                 <?php 
-                    $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.follower_id");
+                    $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.follower_id");
                     while($row = $stmt->fetch()){
                         echo "<a href=/profile.html?user=";
                         echo $row['user_id'];
@@ -114,7 +119,7 @@
             </div>
             <div class="col col-lg-2">
                 <?php 
-                    $stmt = $dbconn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
+                    $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
                     $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
                     $delete = $dbh->prepare($sql);
                     echo "<button type='button' class='btn btn-danger'>Remove</button>";
