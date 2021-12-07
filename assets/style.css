@@ -215,3 +215,7 @@ body{
 .form-group{
   margin-top: 20px;
 }
+/* Image thumbnails */
+div.thumbnail {
+  width: 18rem;
+}

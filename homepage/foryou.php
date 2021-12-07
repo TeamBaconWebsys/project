@@ -16,11 +16,6 @@ include('../includes/login_check.php');
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4bfa365d66.js" crossorigin="anonymous" defer></script>
 
-    <!-- jQuery -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-    <script src="https://code.jquery.com/jquery-1.12.4.js" defer></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
-
     <!-- Bootstrap 5 stylesheet and JS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -70,41 +65,45 @@ include('../includes/login_check.php');
         <div class="my-4 mb-lg-2">
           <h2>For You</h2>
         </div>
-        <div class="col-lg-4 col-md-4 mb-4 mb-lg-0">
-          <div class="image">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg" class="w-100 shadow-1-strong rounded mb-4"
-              alt="" />
-            <i class="far fa-star fa-lg"></i>
-          </div>
-          <div class="image">
-            <img src="https://mdbootstrap.com/img/Photos/Vertical/mountain1.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="" />
-            <i class="fas fa-star fa-lg"></i>
-          </div>
+        <!-- The thing to be looped -->
+        <div class="card thumbnail">
+          <img src="..." class="card-img-top" alt="...">
+          <h5 class="card-title">Card title</h5>
         </div>
 
-        <div class="col-lg-4 col-md-4 mb-4 mb-lg-0">
-          <div class="image">
-            <img src="https://mdbootstrap.com/img/Photos/Vertical/mountain2.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="" />
-            <i class="far fa-star fa-lg"></i>
-          </div>
-          <div class="image">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg" class="w-100 shadow-1-strong rounded mb-4"
-              alt="" />
-            <i class="fas fa-star fa-lg"></i>
-          </div>
-        </div>
+        <?php
+        $conn = db_connect();
 
-        <div class="col-lg-4 col-md-4 mb-4 mb-lg-0">
-          <div class="image">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" class="w-100 shadow-1-strong rounded mb-4"
-              alt="" />
-            <i class="fas fa-star fa-lg"></i>
-          </div>
-          <div class="image">
-            <img src="https://mdbootstrap.com/img/Photos/Vertical/mountain3.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="" />
-            <i class="far fa-star fa-lg"></i>
-          </div>
-        </div>
+        // Get posts from every user your account follows
+        $pstmt = $conn->prepare("SELECT `post_id`, `title`, `image`, `image_type` FROM posts INNER JOIN followers ON followers.user_id = posts.user_id WHERE followers.follower_id = :current_user_id");
+        $pstmt->execute(array(':current_user_id' => $_SESSION['user_id']));
+
+        $rows = $result->fetchAll();
+
+        echo "<div class='row'>";
+        for ($i = 0; $i < count($rows); $i++) {
+          $post = $rows[$i];
+          $post_id = htmlspecialchars($post['post_id']);
+          $title = $post['title'];
+          $img = $post['image'];
+          $img_type = $post['image_type'];
+
+          echo "<div class='col-3'>";
+          echo "<a href='./recipe.php?post=$post_id'>";
+
+          echo "<div class='card thumbnail'>";
+          echo "<img src='data:image/$type;base64,'".base64_encode($image)." class='card-img-top' alt='$title'>";
+          echo "<h5 class='card-title'>$title</h5>";
+          echo "</div>";
+
+          echo "</a></div>\n";
+
+          if ($i % 3 == 2) {
+            echo "</div><div class='row'>\n";
+          }
+        }
+        echo "</div>";
+        ?>
       </div>
     </div>
 
