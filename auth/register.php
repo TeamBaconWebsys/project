@@ -26,7 +26,7 @@
     <div id="wrapper">
 
       <div class="form_div">
-        <p class="form_label">Enter the Soup Kitchen</p>
+        <p class="form_label">Get Your First Bowl of Soup</p>
         <form action="db.php" method="post">
           <?php if (isset($_GET['error'])) { ?>
           <p class="error">
