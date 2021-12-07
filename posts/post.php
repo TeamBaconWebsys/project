@@ -117,7 +117,7 @@
     
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="../index.php"><img src="/images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
+        <a class="navbar-brand" href="../index.php"><img src="../images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -151,7 +151,7 @@
         <div id="postContent" class="card-body">
           <div class="row">
             <div id="postTitle" class="col-md-8">
-              <h3><?php echo $title;?> by <?php echo $artist_username;?></h3>
+              <h3><?php echo $title;?> by <?php echo "<a href='../user/profile.html?user=".$post_info['user_id']."'>$artist_username</a>";?></h3>
             </div>
             <div id="postDate" class="col-md-2">
               <?php echo date('m/d/Y', strtotime(str_replace('-','/', $submitted_date)));?>
