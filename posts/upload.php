@@ -94,7 +94,7 @@ if (isset($_POST["upload"])) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="foryou.php">soup.kitchen</a>
+            <a class="nav-link" aria-current="page" href="../homepage/foryou.php">soup.kitchen</a>
             <a class="nav-link" href="../homepage/saved.php">Saved</a>
             <a class="nav-link" href="../homepage/follow.php">Follows</a>
             <a class="nav-link" href="../homepage/notif.html">Notifications</a>
