@@ -70,6 +70,7 @@
           <div class="my-4">
             <ul class="nav nav-tabs mb-4" role="tablist">
               <li class="nav-item">
+                <!-- Notification Settings with buttons -->
                 <a class="nav-link active" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
                   aria-selected="false">Notifications</a>
               </li>
@@ -83,6 +84,7 @@
                   </div>
                   <div class="col-auto">
                     <div class="custom-control custom-switch">
+                      <!--create a query to database to change / store Follower Notification settings -->
                       <input type="checkbox" class="custom-control-input" id="alert1" checked="" />
                       <span class="custom-control-label"></span>
                     </div>
@@ -97,6 +99,7 @@
                   </div>
                   <div class="col-auto">
                     <div class="custom-control custom-switch">
+                      <!--create a query to database to store Artist Notification settings -->
                       <input type="checkbox" class="custom-control-input" id="alert2" />
                       <span class="custom-control-label"></span>
                     </div>
@@ -125,8 +128,9 @@
                     <form>
                       <div class="form-group">
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                          placeholder="Enter your new username">
+                          placeholder="Enter your new Display Name">
                         <br>
+                        <!-- Querey call to change Display name upon clicking the button -->
                         <button type="button" class="btn btn-secondary btn-sm">Confirm Changes</button>
                       </div>
                     </form>
@@ -155,6 +159,7 @@
                         <input type="password" class="form-control" id="new-password-confirm" placeholder="Re-enter your new password">
                       </div>
                       <br>
+                      <!-- Querey call to change Password upon clicking the button -->
                       <button type="button" class="btn btn-secondary btn-sm">Confirm Changes</button>
                     </form>
                   </div>
@@ -188,6 +193,7 @@
                         <input type="file" class="form-control-file" id="exampleFormControlFile1">
                       </div>
                       <br>
+                      <!-- Querey call to chnage profile photo link in database -->
                       <button type="button" class="btn btn-secondary btn-sm">Confirm Changes</button>
                     </form>
                   </div>
@@ -215,6 +221,7 @@
                     <div class="form-group">
                       <input type="email" class="form-control" id="twitter-link" aria-describedby="emailHelp" placeholder="Enter link">
                       <br>
+                      <!-- Querey call to store twitter link in database upon clicking the button -->
                       <button type="button" class="btn btn-secondary btn-sm">Connect</button>
                     </div>
                   </div>
