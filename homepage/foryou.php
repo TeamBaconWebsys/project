@@ -1,5 +1,6 @@
 <?php
 include('../includes/login_check.php');
+include('../includes/functions.php');
 ?>
 
 <!DOCTYPE html>
@@ -65,11 +66,6 @@ include('../includes/login_check.php');
         <div class="my-4 mb-lg-2">
           <h2>For You</h2>
         </div>
-        <!-- The thing to be looped -->
-        <div class="card thumbnail">
-          <img src="..." class="card-img-top" alt="...">
-          <h5 class="card-title">Card title</h5>
-        </div>
 
         <?php
         $conn = db_connect();
@@ -78,31 +74,37 @@ include('../includes/login_check.php');
         $pstmt = $conn->prepare("SELECT `post_id`, `title`, `image`, `image_type` FROM posts INNER JOIN followers ON followers.user_id = posts.user_id WHERE followers.follower_id = :current_user_id");
         $pstmt->execute(array(':current_user_id' => $_SESSION['user_id']));
 
-        $rows = $result->fetchAll();
+        $rows = $pstmt->fetchAll();
+        $num_rows = count($rows);
 
-        echo "<div class='row'>";
-        for ($i = 0; $i < count($rows); $i++) {
-          $post = $rows[$i];
-          $post_id = htmlspecialchars($post['post_id']);
-          $title = $post['title'];
-          $img = $post['image'];
-          $img_type = $post['image_type'];
+        if ($num_rows > 0) {
+          echo "<div class='row'>";
+          for ($i = 0; $i < $num_rows; $i++) {
+            $post = $rows[$i];
+            $post_id = htmlspecialchars($post['post_id']);
+            $title = $post['title'];
+            $img = $post['image'];
+            $img_type = $post['image_type'];
 
-          echo "<div class='col-3'>";
-          echo "<a href='./recipe.php?post=$post_id'>";
+            echo "<div class='col-3'>";
+            echo "<a href='./recipe.php?post=$post_id'>";
 
-          echo "<div class='card thumbnail'>";
-          echo "<img src='data:image/$type;base64,'".base64_encode($image)." class='card-img-top' alt='$title'>";
-          echo "<h5 class='card-title'>$title</h5>";
-          echo "</div>";
+            echo "<div class='card thumbnail'>";
+            echo "<img src='data:image/$type;base64,'".base64_encode($image)." class='card-img-top' alt='$title'>";
+            echo "<h5 class='card-title'>$title</h5>";
+            echo "</div>";
 
-          echo "</a></div>\n";
+            echo "</a></div>\n";
 
-          if ($i % 3 == 2) {
-            echo "</div><div class='row'>\n";
+            if ($i % 3 == 2) {
+              echo "</div><div class='row'>\n";
+            }
           }
+          echo "</div>";
         }
-        echo "</div>";
+        else {
+          echo "<div> No posts to load :(</div>";
+        }
         ?>
       </div>
     </div>
