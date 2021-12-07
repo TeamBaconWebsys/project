@@ -125,21 +125,20 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
             <a class="nav-link" aria-current="page" href="../homepage/foryou.php">soup.kitchen</a>
-            <a class="nav-link" href="../homepage/saved.html">Saved</a>
-            <a class="nav-link" href="../homepage/follow.html">Follows</a>
+            <a class="nav-link" href="../homepage/saved.php">Saved</a>
+            <a class="nav-link" href="../homepage/follow.php">Follows</a>
             <a class="nav-link" href="../homepage/notif.html">Notifications</a>
           </div>
         </div>
-        <div class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <?php echo $username ?>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo $username; ?>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="../profile/profile.html">Profile</a>
-            <a class="dropdown-item" href="../homepage/settings.html">Settings</a>
-            <a class="dropdown-item" href="../index.html">Log Out</a>
-          </div>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="../user/profile.html">Profile</a></li>
+            <li><a class="dropdown-item" href="../homepage/settings.php">Settings</a></li>
+            <li><a class="dropdown-item" href="../auth/logout.php">Logout</a></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -152,7 +151,7 @@
         <div id="postContent" class="card-body">
           <div class="row">
             <div id="postTitle" class="col-md-8">
-              <h3><?php echo $title;?> by <?php echo $artist_username;?></h3>
+              <h3><?php echo $title;?> by <?php echo "<a href='../user/profile.html?user=".$post_info['user_id']."'>$artist_username</a>";?></h3>
             </div>
             <div id="postDate" class="col-md-2">
               <?php echo date('m/d/Y', strtotime(str_replace('-','/', $submitted_date)));?>

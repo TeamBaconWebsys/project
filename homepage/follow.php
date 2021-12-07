@@ -1,3 +1,13 @@
+<?php
+include('../includes/login_check.php');
+include('../includes/functions.php');
+$conn = db_connect();
+
+function delete_following($following_id) {
+  $pstmt = $conn->prepare("DELETE FROM followers WHERE user_id = :current_user_id AND follower_id = :follower_id");
+  $pstmt->execute([':current_user_id' => $current_user_id, ':follower_id' => $following_id]);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,104 +41,106 @@
   </head>
 
   <body>
-    <?php
-      include('../inlcudes/functions.inc.php');
-      session_start();
-      $conn = db_connect();
-    ?>
-    <nav class="navbar navbar-expand-md navbar-light sticky-top" id="navbar">
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html"><img src="/images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
+        <a class="navbar-brand" href="../index.php"><img src="../images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="/homepage/foryou.html">soup.kitchen</a>
-            <a class="nav-link" href="/homepage/saved.html">Saved</a>
-            <a class="nav-link" href="/homepage/following.html">Following</a>
-            <a class="nav-link" href="/homepage/followers.html">Followers</a>
-            <a class="nav-link" href="/homepage/notif.html">Notifications</a>
+            <a class="nav-link" aria-current="page" href="foryou.php">soup.kitchen</a>
+            <a class="nav-link" href="saved.php">Saved</a>
+            <a class="nav-link" href="follow.php">Follows</a>
+            <a class="nav-link" href="notif.html">Notifications</a>
           </div>
         </div>
-        <div class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            username
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo get_username($_SESSION['user_id']); ?>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="profile/profile.html">Profile</a>
-            <a class="dropdown-item" href="homepage/settings.html">Settings</a>
-            <a class="dropdown-item" href="index.html">Log Out</a>
-          </div>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="../user/profile.html">Profile</a></li>
+            <li><a class="dropdown-item" href="settings.php">Settings</a></li>
+            <li><a class="dropdown-item" href="../auth/logout.php">Logout</a></li>
+          </ul>
         </div>
       </div>
     </nav>
 
     <!-- Following List-->
-    <h1 class="display-3 text-center">Following</h1>
-    <br>
+    <h1 class="display-3 text-center mb-4">Following</h1>
     <div class="container">
       <div class="row">
         <div class="col-6 mx-auto">
           <div class="row justify-content-md-center">
-            <div class="col">
-              <?php 
-                $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = $_SESSION['user_id']");
-                while($row = $stmt->fetch()){
-                  echo "<a href=/profile.html?user=";
+              <?php
+              $current_user_id = $_SESSION['user_id'];
+              $pstmt = $conn->prepare("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = :current_user_id");
+              $pstmt->execute(array(':current_user_id' => $current_user_id));
+
+              $rows = $pstmt->fetchAll();
+              $num_rows = count($rows);
+              if ($num_rows > 0) {
+                foreach($rows as $row){
+                  echo "<div class='col-10'>";
+                  echo "<a href='../user/profile.html?user=";
                   echo $row['user_id'];
-                  echo "class='list-group-item list-group-item-action' aria-current='true'>";
+                  echo "' class='list-group-item list-group-item-action' aria-current='true'>";
                   echo $row['display_name'];
                   echo "</a>";
-                }
               ?>
             </div>
-            <div class="col col-lg-2">
-              <?php 
-                function delete_following(){
-                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = $_SESSION['user_id']");
-                  $sql = "DELETE FROM followers WHERE followers.user_id = $_SESSION['user_id']";
-                  $delete = $dbh->prepare($sql);
-                  $delete -> excute();
-                }
-              ?>
-              <button type='button' onclick="click_me1()" class='btn btn-danger'>Remove</button>
+            <div class="col-2">
+              <button type='button' onclick="" class='btn btn-danger'>Remove</button>
             </div>
+            <?php
+              }
+            }
+            else {
+              echo "<div>You aren't following anyone :(</div>";
+            }
+            ?>
           </div>
         </div>
       </div>
-    <br>
     <!-- Followers List-->
-    <h1 class="display-3 text-center">Followers</h1>
-    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1 class="display-3 text-center mb-4">Followers</h1>
+        </div>   
+      </div>
       <div class="row">
         <div class="col-6 mx-auto">
           <div class="row justify-content-md-center">
-            <div class="col">
-                <?php 
-                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = $_SESSION['user_id']");
-                  while($row = $stmt->fetch()){
-                    echo "<a href=/profile.html?user=";
-                    echo $row['user_id'];
-                    echo "class='list-group-item list-group-item-action' aria-current='true'>";
-                    echo $row['display_name'];
-                    echo "</a>";
-                  }
-                ?>
-            </div>
-            <div class="col col-lg-2">
-              <?php 
-                function delete_follower(){
-                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = $_SESSION['user_id']");
-                  $sql = "DELETE FROM followers WHERE followers.user_id = $_SESSION['user_id']";
-                  $delete = $dbh->prepare($sql);
-                  $delete -> excute();
-                }
+              <?php
+              $current_user_id = $_SESSION['user_id'];
+              $pstmt = $conn->prepare("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.user_id = :current_user_id");
+              $pstmt->execute(array(':current_user_id' => $current_user_id));
+
+              $rows = $pstmt->fetchAll();
+              $num_rows = count($rows);
+              if ($num_rows > 0) {
+                foreach($rows as $row){
+                  echo "<div class='col-10'>";
+                  echo "<a href='../user/profile.html?user=";
+                  echo $row['user_id'];
+                  echo "' class='list-group-item list-group-item-action' aria-current='true'>";
+                  echo $row['display_name'];
+                  echo "</a>";
               ?>
-              <button type='button' onclick="click_me2()" class='btn btn-danger'>Remove</button>
             </div>
+            <div class="col-2">
+              <button type='button' onclick="" class='btn btn-danger'>Remove</button>
+            </div>
+            <?php
+              }
+            }
+            else {
+              echo "<div>No one is following you :(</div>";
+            }
+            ?>
           </div>
         </div>
       </div>

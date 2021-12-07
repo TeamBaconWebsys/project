@@ -95,21 +95,20 @@ if (isset($_POST["upload"])) {
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
             <a class="nav-link" aria-current="page" href="../homepage/foryou.php">soup.kitchen</a>
-            <a class="nav-link" href="../homepage/saved.html">Saved</a>
-            <a class="nav-link" href="../homepage/follow.html">Follows</a>
+            <a class="nav-link" href="../homepage/saved.php">Saved</a>
+            <a class="nav-link" href="../homepage/follow.php">Follows</a>
             <a class="nav-link" href="../homepage/notif.html">Notifications</a>
           </div>
         </div>
-        <div class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <?php echo $username ?>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo get_username($_SESSION['user_id']); ?>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="../profile/profile.html">Profile</a>
-            <a class="dropdown-item" href="../homepage/settings.html">Settings</a>
-            <a class="dropdown-item" href="../index.html">Log Out</a>
-          </div>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="../user/profile.html">Profile</a></li>
+            <li><a class="dropdown-item" href="../homepage/settings.php">Settings</a></li>
+            <li><a class="dropdown-item" href="../auth/logout.php">Logout</a></li>
+          </ul>
         </div>
       </div>
     </nav>

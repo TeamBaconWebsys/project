@@ -1,3 +1,8 @@
+<?php
+include('../includes/login_check.php');
+include('../includes/functions.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,29 +39,28 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-light sticky-top" id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html"><img src="images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
+        <a class="navbar-brand" href="../index.php"><img src="../images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="foryou.html">soup.kitchen</a>
-            <a class="nav-link" href="saved.html">Saved</a>
-            <a class="nav-link" href="follow.html">Follows</a>
+            <a class="nav-link" aria-current="page" href="foryou.php">soup.kitchen</a>
+            <a class="nav-link" href="saved.php">Saved</a>
+            <a class="nav-link" href="follow.php">Follows</a>
             <a class="nav-link" href="notif.html">Notifications</a>
           </div>
         </div>
-        <div class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            username
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo get_username($_SESSION['user_id']); ?>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="profile/profile.html">Profile</a>
-            <a class="dropdown-item" href="homepage/settings.html">Settings</a>
-            <a class="dropdown-item" href="index.html">Log Out</a>
-          </div>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="../user/profile.html">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="../auth/logout.php">Logout</a></li>
+          </ul>
         </div>
       </div>
     </nav>
