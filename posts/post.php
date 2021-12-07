@@ -1,18 +1,19 @@
 <?php
-  includes "../login_check()";
+  //include('../includes/functions.php');
+  include('../includes/login_check.php');
   $dbhost= "localhost";
   $dbname = "soup.kitchen";
   $dbusername= "root";
-  $dbpassword = "gwinifred20";
-  session_start();
+  $dbpassword = "";
   
+  //TODO: Convert mysqli to PDO --> match with rest of the files
   $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
   // Check connection
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   } 
 
-  //-send id as query string --> get post_id from it??/
+  //-send id as query string --> get post_id from it??
   $id='1';
   if(isset($_SESSION['post_id'])){
     $id=$_SESSION['post_id'];
@@ -76,24 +77,17 @@
   //get the different items that were gotten and puts them in an array, with the keys being the different content.
   $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array, 'favorite'=>$favorite_array);
   
-  if (isset($_POST['Favorite'])){
-    if ($user_id == '0' || isset($_POST['Favorite'])=='0'){ 
-      $url="../auth/login.php";
-      header("Location:$url");
-      exit;
-    }
+  if (isset($_POST['Favorite']) == "Favorite"){
     
-    if($array['favorite'][0] == 'true' && isset($_SESSION['user_id']) ){  
+    //TODO: Add the post the favorite page for the user.
+    if($array['favorite'][0] == 'true'){  
       $delete_sql = "DELETE FROM favorites WHERE user_id=$user_id AND post_id=$id";
       $result = $conn->query($delete_sql);
       header("Refresh:0");
-    } else if ($array['favorite'][0] == 'false' && isset($_SESSION['user_id'])){
+    } else {
       $add_sql = "INSERT INTO favorites (user_id, post_id) VALUES($user_id, $id);";
       header("Refresh:0");
-    } else{
-      header("Location:../auth/login.php");
-      exit();
-    }
+    } 
   }
 
   $conn->close();
@@ -134,18 +128,17 @@
     
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html"><img src="../images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
+        <a class="navbar-brand" href="../index.php"><img src="../images/soup_icon.svg" alt="soup.kitchen logo" width="75" height="75" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="/homepage/foryou.html">soup.kitchen</a>
-            <a class="nav-link" href="/homepage/saved.html">Saved</a>
-            <a class="nav-link" href="/homepage/following.html">Following</a>
-            <a class="nav-link" href="/homepage/followers.html">Followers</a>
-            <a class="nav-link" href="/homepage/notif.html">Notifications</a>
+            <a class="nav-link" aria-current="page" href="../homepage/foryou.php">soup.kitchen</a>
+            <a class="nav-link" href="../homepage/saved.html">Saved</a>
+            <a class="nav-link" href="../homepage/follow.html">Follows</a>
+            <a class="nav-link" href="../homepage/notif.html">Notifications</a>
           </div>
         </div>
         <div class="nav-item dropdown ">
@@ -177,13 +170,13 @@
             </div>
             <div id="favoritePost" class="col-md-2">
               <form id="favForm">
-                <button id="isFav" type="submit" name="Favorite" value="<?php echo $array['favorite'][1];?>"
+                <input id="isFav" type="submit" name="Favorite" value="Favorite"
                   class="<?php if($array['favorite'][0] == 'true'){
                       echo 'btn active';
                     } else{
                       echo 'btn notActive';
                     }?>"
-                >Favorite</button>
+                />
               </form>
             </div>
           </div>
