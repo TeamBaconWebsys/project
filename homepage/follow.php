@@ -138,7 +138,7 @@ function delete_following($following_id) {
               }
             }
             else {
-              echo "<div>You aren't following anyone :(</div>";
+              echo "<div>No one is following you :(</div>";
             }
             ?>
           </div>
