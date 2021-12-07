@@ -89,7 +89,7 @@ include('../includes/functions.php');
             echo "<div class='col-3 thumbnail'>";
             echo "<a href='./recipe.php?post=$post_id'>";
 
-            echo "<div class='card'>";
+            echo "<div class='card thumb-width'>";
             echo "<div class='image'>";
             echo "<img src='data:$img_type;base64,".base64_encode($image)."' class='img-fluid' alt='$title'>";
 

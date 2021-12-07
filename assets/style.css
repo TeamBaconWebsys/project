@@ -216,7 +216,7 @@ body{
   margin-top: 20px;
 }
 /* Image thumbnails */
-.thumbnail .card {
+div.thumb-width {
   width: 18rem;
 }
 
