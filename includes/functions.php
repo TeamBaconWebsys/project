@@ -2,7 +2,7 @@
 
 // database connection function
 function db_connect() {
-  $db = parse_ini_file("config.ini");
+  $db = parse_ini_file("config-sample.ini");
   $dbhost = $db['dbhost'];
   $dbname = $db['dbname'];
   $dbuser = $db['dbuser'];
