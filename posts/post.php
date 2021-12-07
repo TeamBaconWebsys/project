@@ -1,4 +1,5 @@
 <?php
+  includes "../login_check()";
   $dbhost= "localhost";
   $dbname = "soup.kitchen";
   $dbusername= "root";
@@ -11,8 +12,11 @@
     die("Connection failed: " . $conn->connect_error);
   } 
 
-  //-send id as query string --> get post_id from it
+  //-send id as query string --> get post_id from it??/
   $id='1';
+  if(isset($_SESSION['post_id'])){
+    $id=$_SESSION['post_id'];
+  }
   #not sure where to get the id from? probably from clicking the image --> sends over the id, then the php page will retrieve it
   
   #initialize the arrays 
@@ -73,16 +77,23 @@
   $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array, 'favorite'=>$favorite_array);
   
   if (isset($_POST['Favorite'])){
-    if($array['favorite'][0] == 'true' && isset($_SESSION['user_id'])){
+    if ($user_id == '0' || isset($_POST['Favorite'])=='0'){ 
+      $url="../auth/login.php";
+      header("Location:$url");
+      exit;
+    }
+    
+    if($array['favorite'][0] == 'true' && isset($_SESSION['user_id']) ){  
       $delete_sql = "DELETE FROM favorites WHERE user_id=$user_id AND post_id=$id";
       $result = $conn->query($delete_sql);
+      header("Refresh:0");
     } else if ($array['favorite'][0] == 'false' && isset($_SESSION['user_id'])){
       $add_sql = "INSERT INTO favorites (user_id, post_id) VALUES($user_id, $id);";
+      header("Refresh:0");
     } else{
-      header("Location: ../auth/login.php");
+      header("Location:../auth/login.php");
+      exit();
     }
-
-    header("Refresh:0");
   }
 
   $conn->close();
@@ -150,7 +161,7 @@
         </div>
       </div>
     </nav>
-
+    
     <div id="postBody" class="container-fluid">
       <div id="postContainer" class="card">
         <div id="postImg">
@@ -159,10 +170,10 @@
         <div id="postContent" class="card-body">
           <div class="row">
             <div id="postTitle" class="col-md-8">
-              <h3><?php echo $array['post'][0]['title'];?></h3>
+              <h3><?php echo $array['post'][0]['title'];?> by <?php echo $array['user'][0]['username'];?></h3>
             </div>
             <div id="postDate" class="col-md-2">
-              <?php echo date('m-d-Y', strtotime(str_replace('-','/', $array['post'][0]['upload_date'])));;?>
+              <?php echo date('m/d/Y', strtotime(str_replace('-','/', $array['post'][0]['upload_date'])));;?>
             </div>
             <div id="favoritePost" class="col-md-2">
               <form id="favForm">
