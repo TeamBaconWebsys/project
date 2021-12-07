@@ -41,16 +41,16 @@ include('../includes/functions.php');
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav link-dark">
-            <a class="nav-link" aria-current="page" href="foryou.html">soup.kitchen</a>
-            <a class="nav-link" href="saved.html">Saved</a>
-            <a class="nav-link" href="follow.html">Follows</a>
+            <a class="nav-link" aria-current="page" href="foryou.php">soup.kitchen</a>
+            <a class="nav-link" href="saved.php">Saved</a>
+            <a class="nav-link" href="follow.php">Follows</a>
             <a class="nav-link" href="notif.html">Notifications</a>
           </div>
         </div>
         <div class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            username
+            <?php echo get_username($_SESSION['user_id']); ?>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#">Profile</a>
