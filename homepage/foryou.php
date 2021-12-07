@@ -90,7 +90,10 @@ include('../includes/functions.php');
             echo "<a href='./recipe.php?post=$post_id'>";
 
             echo "<div class='card thumbnail'>";
+            echo "<div class='image'>";
             echo "<img src='data:image/$type;base64,'".base64_encode($image)." class='card-img-top' alt='$title'>";
+            echo "<i class='far fa-star fa-lg'></i>";
+            echo "</div>";
             echo "<h5 class='card-title'>$title</h5>";
             echo "</div>";
 
