@@ -24,7 +24,7 @@ include('../includes/functions.php');
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous" defer></script>
 
     <!--custom CSS and JS-->
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="style.css">
     <script src="/assets/script.js" async></script>
 
@@ -83,15 +83,16 @@ include('../includes/functions.php');
             $post = $rows[$i];
             $post_id = htmlspecialchars($post['post_id']);
             $title = $post['title'];
-            $img = $post['image'];
+            $image = $post['image'];
             $img_type = $post['image_type'];
 
-            echo "<div class='col-3'>";
+            echo "<div class='col-3 thumbnail'>";
             echo "<a href='./recipe.php?post=$post_id'>";
 
-            echo "<div class='card thumbnail'>";
+            echo "<div class='card'>";
             echo "<div class='image'>";
-            echo "<img src='data:image/$type;base64,'".base64_encode($image)." class='card-img-top' alt='$title'>";
+            echo "<img src='data:$img_type;base64,".base64_encode($image)."' class='img-fluid' alt='$title'>";
+
             echo "<i class='far fa-star fa-lg'></i>";
             echo "</div>";
             echo "<h5 class='card-title'>$title</h5>";

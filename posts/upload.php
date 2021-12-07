@@ -4,6 +4,52 @@
 
  $conn = db_connect();
 
+ // user input validation
+function validate($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+function validate_image($image) {
+  $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
+  $detectedType = exif_imagetype($image);
+  if (!in_array($detectedType, $allowedTypes)) return false;
+  else return addslashes(file_get_contents($image));;
+}
+
+if (isset($_POST["upload"])) {
+  // todo:: check inputs and double-check sanitization is sufficient
+  $title = validate($_POST["title"]);
+  $tags = validate($_POST["tags"]);
+  $image = file_get_contents($_FILES['image']['tmp_name']);
+  
+
+  // get image type
+  $finfo = new finfo();
+  $finfo = finfo_open(FILEINFO_MIME_TYPE);
+  $detected_type = finfo_file( $finfo, $_FILES['image']['tmp_name'] );
+
+  // This is where we try to insert post into database
+  $pstmt = $conn->prepare("INSERT INTO posts(user_id, title, image, image_type)
+                          VALUES(:user_id, :title, :image, :image_type)");
+  $result = $pstmt->execute([':user_id' => $_SESSION['user_id'], ':title' => $title, ':image' => $image, ':image_type' => $detected_type]);
+
+  if (!$result) {
+      echo '<div class="db-status error">Error inserting into database.</div>';
+  }
+  else {
+    echo '<div class="db-status">Added!</div>';
+    $stmt = $conn->query("SELECT LAST_INSERT_ID()");
+    $inserted_id = $stmt->fetch();
+    // Now we should add the tags!
+    add_tags($tags, array_values($inserted_id)[0]);
+  }
+
+  // clear the post array
+  $_POST = array();
+}
 ?>
 
 <!DOCTYPE html>
@@ -74,21 +120,21 @@
         <div class="col"></div>
         <div id="formBody" class="col">
           <h2>Upload Your Post!</h2>
-          <form>
+          <form action="upload.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-              <label for="postName">Name of Post:</label>
+              <label for="postName">Post Title:</label>
               <input id="postName" class="form-control" type="text" placeholder="Post Name" name="title" id="title" value="" />
             </div>
             <div class="form-group">
               <label for="uploadTags">Tags:</label>
-              <input id="uploadTags" class="form-control" type="text" placeholder="Insert tags (separate by commas)" name="tags" id="name" value="" />
+              <input id="uploadTags" class="form-control" type="text" placeholder="Insert tags (separate by commas)" name="tags" id="tags" value="" />
             </div>
             <div class="form-group">
               <label for="uploadTags">Upload Image:</label><br>
-              <input id="insertImg" type="file" name="Image"/>
+              <input id="insertImg" type="file" name="image" accept="image/*"/>
             </div>
             </br>
-            <input class="btn tagBtn" type="submit" name="Post!" value="Post!"/>
+            <input class="btn btn-lg tagBtn" type="submit" name="upload" value="Post!"/>
           </form>
         </div>
         <div class="col"></div>
