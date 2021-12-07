@@ -47,8 +47,7 @@
           <div class="navbar-nav link-dark">
             <a class="nav-link" aria-current="page" href="/homepage/foryou.html">soup.kitchen</a>
             <a class="nav-link" href="/homepage/saved.html">Saved</a>
-            <a class="nav-link" href="/homepage/following.html">Following</a>
-            <a class="nav-link" href="/homepage/followers.html">Followers</a>
+            <a class="nav-link" href="/homepage/follow.php">Follows</a>
             <a class="nav-link" href="/homepage/notif.html">Notifications</a>
           </div>
         </div>
@@ -75,7 +74,8 @@
           <div class="row justify-content-md-center">
             <div class="col">
               <?php 
-                $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = $_SESSION['user_id']");
+
+                $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id =".$_SESSION['user_id']);
                 while($row = $stmt->fetch()){
                   echo "<a href=/profile.html?user=";
                   echo $row['user_id'];
@@ -88,8 +88,8 @@
             <div class="col col-lg-2">
               <?php 
                 function delete_following(){
-                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = $_SESSION['user_id']");
-                  $sql = "DELETE FROM followers WHERE followers.user_id = $_SESSION['user_id']";
+                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id =".$_SESSION['user_id']);
+                  $sql = "DELETE FROM followers WHERE followers.user_id =".$_SESSION['user_id'];
                   $delete = $dbh->prepare($sql);
                   $delete -> excute();
                 }
@@ -108,7 +108,7 @@
           <div class="row justify-content-md-center">
             <div class="col">
                 <?php 
-                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = $_SESSION['user_id']");
+                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id =". $_SESSION['user_id']);
                   while($row = $stmt->fetch()){
                     echo "<a href=/profile.html?user=";
                     echo $row['user_id'];
@@ -121,8 +121,8 @@
             <div class="col col-lg-2">
               <?php 
                 function delete_follower(){
-                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = $_SESSION['user_id']");
-                  $sql = "DELETE FROM followers WHERE followers.user_id = $_SESSION['user_id']";
+                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = ".$_SESSION['user_id']);
+                  $sql = "DELETE FROM followers WHERE followers.user_id =".$_SESSION['user_id'];
                   $delete = $dbh->prepare($sql);
                   $delete -> excute();
                 }
@@ -136,4 +136,3 @@
     <br>
   </body>
 </html>
-
