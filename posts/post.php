@@ -26,7 +26,8 @@
   $user_array = array();
   $poster_id = '0';
 
-  #get the post item from the database
+  //TODO: Change mysqli to PDO
+  //Get the information of the post
   $sql = "SELECT * FROM posts WHERE post_id='1'";
   $result = $conn->query($sql);
   if(!$result) { echo "Error" . $conn->error; }
@@ -38,7 +39,8 @@
     }
   }
   
-  #get the post tags from the database
+  //TODO: Change mysqli to PDO
+  //get the post tags from the database
   $tag_sql = "SELECT * FROM tags WHERE post_id=$id";
   $result = $conn->query($tag_sql);
 
@@ -47,8 +49,9 @@
       array_push($tag_array, $row);
     }
   }
-  
-  #get the user who uploaded the post from the database
+
+  //TODO: Change mysqli to PDO
+  //get the user who uploaded the post from the database
   $user_sql = "SELECT username from accounts WHERE user_id=$poster_id";
   $result = $conn->query($user_sql);
   if ($result->num_rows > 0){
@@ -57,11 +60,20 @@
     }
   }
 
-  $user_id = '0';
-  if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
+  //TODO: change to PDO
+  $user_id = $_SESSION['user_id'];
+  $username = '0';
+  //get username of the user --> for the navbar
+  $username_sql = "SELECT username from accounts WHERE user_id=$user_id";
+  $result = $conn->query($username_sql);
+  if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+      $username = $row['username'];
+    }
   }
-  #see if the user has favorited the post before
+
+  //TODO: Change mysqli to PDO
+  //see if the user has favorited the post before
   $favorite_sql = "SELECT userid from favorites WHERE user_id=$user_id";
   $result = $conn->query($favorite_sql);
   $favorite_array = array();
@@ -73,10 +85,12 @@
 
   array_push($favorite_array, $user_id);
   
-
+  
   //get the different items that were gotten and puts them in an array, with the keys being the different content.
   $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array, 'favorite'=>$favorite_array);
   
+  //TODO: Change mysqli to PDO
+  //when favorite is submitted, try to see if you can remove/add them to the database.
   if (isset($_POST['Favorite']) == "Favorite"){
     
     //TODO: Add the post the favorite page for the user.
@@ -144,7 +158,7 @@
         <div class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            username
+            <?php echo $username ?>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="../profile/profile.html">Profile</a>
