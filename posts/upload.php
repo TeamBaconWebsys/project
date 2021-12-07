@@ -35,7 +35,7 @@
     <link type="text/css" rel="stylesheet" href="../assets/style.css">
     <script src="../assets/script.js" async></script>
 
-    <title><?php echo $array['post'][0]['title'];?></title>
+    <title>Upload</title>
   </head>
   <body>
 
