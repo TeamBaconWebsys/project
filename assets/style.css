@@ -185,3 +185,16 @@
 #favoritePost{
   padding: 0px;
 }
+
+/*Upload page CSS*/
+#formBody{
+  margin: 10px;
+  padding: 20px;
+}
+
+#formBody label{
+  font-weight: bold;
+}
+.form-group{
+  margin-top: 20px;
+}
