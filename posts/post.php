@@ -1,110 +1,85 @@
 <?php
-  //include('../includes/functions.php');
+  include('../includes/functions.php');
   include('../includes/login_check.php');
-  $dbhost= "localhost";
-  $dbname = "soup.kitchen";
-  $dbusername= "root";
-  $dbpassword = "";
   
-  //TODO: Convert mysqli to PDO --> match with rest of the files
-  $conn = new mysqli($dbhost, $dbusername, $dbpassword, $dbname);
-  // Check connection
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  } 
+  $conn = db_connect();
 
-  //-send id as query string --> get post_id from it??
-  $id='1';
-  if(isset($_SESSION['post_id'])){
-    $id=$_SESSION['post_id'];
+  // kick them out if they got here and there's no post to access
+  if(!isset($_GET['post'])){
+    header('Location: ../index.php', true, 302);
+    die();
   }
-  #not sure where to get the id from? probably from clicking the image --> sends over the id, then the php page will retrieve it
-  
+  $post_id = $_GET['post'];
+
   #initialize the arrays 
   $post_array = array();
   $tag_array = array();
   $user_array = array();
   $poster_id = '0';
 
-  //TODO: Change mysqli to PDO
   //Get the information of the post
-  $sql = "SELECT * FROM posts WHERE post_id='1'";
-  $result = $conn->query($sql);
-  if(!$result) { echo "Error" . $conn->error; }
+  $pstmt = $conn->prepare("SELECT * FROM posts WHERE post_id = :post_id");
+  $result = $pstmt->execute([':post_id' => $post_id]);
 
-  if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){
-      array_push($post_array, $row);
-      $poster_id = $row['user_id'];
-    }
+  if(!$result) {
+    header('Location: ../index.php', true, 302);
+    die();
   }
+
+  $post_info = $pstmt->fetch();
+  $title = $post_info['title'];
+  $submitted_date = $post_info['upload_date'];
+  $image = $post_info['image'];
+  $img_type = $post_info['image_type'];
   
-  //TODO: Change mysqli to PDO
   //get the post tags from the database
-  $tag_sql = "SELECT * FROM tags WHERE post_id=$id";
-  $result = $conn->query($tag_sql);
+  $pstmt = $conn->prepare("SELECT tag FROM tags WHERE post_id = :post_id");
+  $result = $pstmt->execute([':post_id' => $post_id]);
 
-  if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){
-      array_push($tag_array, $row);
+  $rows = $pstmt->fetchAll();
+  $row_num = count($rows);
+  if ($row_num > 0) {
+    foreach($rows as $row) {
+      array_push($tag_array, $row['tag']);
     }
   }
 
-  //TODO: Change mysqli to PDO
-  //get the user who uploaded the post from the database
-  $user_sql = "SELECT username from accounts WHERE user_id=$poster_id";
-  $result = $conn->query($user_sql);
-  if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){
-      array_push($user_array, $row);
-    }
-  }
+  // get the user who uploaded the post from the database
+  $pstmt = $conn->prepare("SELECT username, display_name FROM accounts WHERE user_id = :artist_id");
+  $result = $pstmt->execute([':artist_id' => $post_info['user_id']]);
+  $artist_data = $pstmt->fetch();
+  
+  $artist_name = $artist_data['display_name'];
+  $artist_username = $artist_data['username'];
 
-  //TODO: change to PDO
-  $user_id = $_SESSION['user_id'];
-  $username = '0';
-  //get username of the user --> for the navbar
-  $username_sql = "SELECT username from accounts WHERE user_id=$user_id";
-  $result = $conn->query($username_sql);
-  if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){
-      $username = $row['username'];
-    }
-  }
+  // get username of current user for navbar
+  $username = get_username($_SESSION['user_id']);
 
   //TODO: Change mysqli to PDO
   //see if the user has favorited the post before
-  $favorite_sql = "SELECT userid from favorites WHERE user_id=$user_id";
-  $result = $conn->query($favorite_sql);
-  $favorite_array = array();
-  if(!$result){
-    array_push($favorite_array, 'false');
-  } else{
-    array_push($favorite_array, 'true');
-  }
-
-  array_push($favorite_array, $user_id);
-  
+  $pstmt = $conn->prepare("SELECT * FROM favorites WHERE user_id = :user_id AND post_id = :post_id");
+  $result = $pstmt->execute([':user_id' => $_SESSION['user_id'], ':post_id' => $post_id]);
+  $check_fav = $pstmt->fetch();
   
   //get the different items that were gotten and puts them in an array, with the keys being the different content.
-  $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array, 'favorite'=>$favorite_array);
+  // $array = array('post' => $post_array, 'tag'=>$tag_array, 'user'=>$user_array, 'favorite'=>$favorite_array);
   
-  //TODO: Change mysqli to PDO
-  //when favorite is submitted, try to see if you can remove/add them to the database.
-  if (isset($_POST['Favorite']) == "Favorite"){
+  // //TODO: Change mysqli to PDO
+  // //when favorite is submitted, try to see if you can remove/add them to the database.
+  // if (isset($_POST['Favorite']) == "Favorite"){
     
-    //TODO: Add the post the favorite page for the user.
-    if($array['favorite'][0] == 'true'){  
-      $delete_sql = "DELETE FROM favorites WHERE user_id=$user_id AND post_id=$id";
-      $result = $conn->query($delete_sql);
-      header("Refresh:0");
-    } else {
-      $add_sql = "INSERT INTO favorites (user_id, post_id) VALUES($user_id, $id);";
-      header("Refresh:0");
-    } 
-  }
+  //   //TODO: Add the post the favorite page for the user.
+  //   if($array['favorite'][0] == 'true'){  
+  //     $delete_sql = "DELETE FROM favorites WHERE user_id=$user_id AND post_id=$id";
+  //     $result = $conn->query($delete_sql);
+  //     header("Refresh:0");
+  //   } else {
+  //     $add_sql = "INSERT INTO favorites (user_id, post_id) VALUES($user_id, $id);";
+  //     header("Refresh:0");
+  //   } 
+  // }
 
-  $conn->close();
+  // $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +111,7 @@
     <link type="text/css" rel="stylesheet" href="../assets/style.css">
     <script src="../assets/script.js" async></script>
 
-    <title><?php echo $array['post'][0]['title'];?></title>
+    <title><?php echo $title;?></title>
   </head>
   <body>
     
@@ -172,20 +147,20 @@
     <div id="postBody" class="container-fluid">
       <div id="postContainer" class="card">
         <div id="postImg">
-          <img class="card-img rounded mx-auto d-block" src="<?php echo $array['post'][0]['image_link']; ?>" />
+          <?php echo "<img src='data:$img_type;base64,".base64_encode($image)."' class='img-fluid card-img rounded mx-auto d-block' alt='$title'>"; ?>
         </div>
         <div id="postContent" class="card-body">
           <div class="row">
             <div id="postTitle" class="col-md-8">
-              <h3><?php echo $array['post'][0]['title'];?> by <?php echo $array['user'][0]['username'];?></h3>
+              <h3><?php echo $title;?> by <?php echo $artist_username;?></h3>
             </div>
             <div id="postDate" class="col-md-2">
-              <?php echo date('m/d/Y', strtotime(str_replace('-','/', $array['post'][0]['upload_date'])));;?>
+              <?php echo date('m/d/Y', strtotime(str_replace('-','/', $submitted_date)));?>
             </div>
             <div id="favoritePost" class="col-md-2">
               <form id="favForm">
                 <input id="isFav" type="submit" name="Favorite" value="Favorite"
-                  class="<?php if($array['favorite'][0] == 'true'){
+                  class="<?php if(1 == 'true'){
                       echo 'btn active';
                     } else{
                       echo 'btn notActive';
@@ -198,8 +173,8 @@
           <div id="postTag">
             <b>Tags:</b>
             <div class="btn-group">
-              <?php foreach($array['tag'] as $tag) :?>
-                <button class='btn tagBtn'><?php echo $tag['tag'];?></button>
+              <?php foreach($tag_array as $tag) :?>
+                <button class='btn tagBtn'><?php echo $tag;?></button>
               <?php endforeach;?>
             </div>
           </div>

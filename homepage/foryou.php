@@ -87,7 +87,7 @@ include('../includes/functions.php');
             $img_type = $post['image_type'];
 
             echo "<div class='col-3 thumbnail'>";
-            echo "<a href='./recipe.php?post=$post_id'>";
+            echo "<a href='../posts/post.php?post=$post_id'>";
 
             echo "<div class='card thumb-width'>";
             echo "<div class='image'>";
