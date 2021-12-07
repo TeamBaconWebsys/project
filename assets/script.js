@@ -30,4 +30,13 @@ $(document).ready(function(){
     $("#galleryPNG").addClass("show");
   });
   
+  function click_me1(){
+    var result ="<?php delete_following(); ?>"
+    document.write(result);
+  }
+  function click_me2(){
+    var result ="<?php delete_follower(); ?>"
+    document.write(result);
+  }
+  
 });

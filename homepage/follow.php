@@ -32,9 +32,9 @@
 
   <body>
     <?php
-        include('../inlcudes/functions.inc.php');
-        session_start();
-        $conn = db_connect();
+      include('../inlcudes/functions.inc.php');
+      session_start();
+      $conn = db_connect();
     ?>
     <nav class="navbar navbar-expand-md navbar-light sticky-top" id="navbar">
       <div class="container-fluid">
@@ -75,29 +75,30 @@
           <div class="row justify-content-md-center">
             <div class="col">
               <?php 
-                $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
+                $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = $_SESSION['user_id']");
                 while($row = $stmt->fetch()){
-                    echo "<a href=/profile.html?user=";
-                    echo $row['user_id'];
-                    echo "class='list-group-item list-group-item-action' aria-current='true'>";
-                    echo $row['display_name'];
-                    echo "</a>";
+                  echo "<a href=/profile.html?user=";
+                  echo $row['user_id'];
+                  echo "class='list-group-item list-group-item-action' aria-current='true'>";
+                  echo $row['display_name'];
+                  echo "</a>";
                 }
               ?>
             </div>
             <div class="col col-lg-2">
               <?php 
-                $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-                $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-                $delete = $dbh->prepare($sql);
-                echo "<button type='button' class='btn btn-danger'>Remove</button>";
-                $delete -> excute();
+                function delete_following(){
+                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.user_id = accounts.user_id WHERE followers.follower_id = $_SESSION['user_id']");
+                  $sql = "DELETE FROM followers WHERE followers.user_id = $_SESSION['user_id']";
+                  $delete = $dbh->prepare($sql);
+                  $delete -> excute();
+                }
               ?>
+              <button type='button' onclick="click_me1()" class='btn btn-danger'>Remove</button>
             </div>
           </div>
         </div>
       </div>
-
     <br>
     <!-- Followers List-->
     <h1 class="display-3 text-center">Followers</h1>
@@ -107,30 +108,32 @@
           <div class="row justify-content-md-center">
             <div class="col">
                 <?php 
-                    $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.follower_id");
-                    while($row = $stmt->fetch()){
-                        echo "<a href=/profile.html?user=";
-                        echo $row['user_id'];
-                        echo "class='list-group-item list-group-item-action' aria-current='true'>";
-                        echo $row['display_name'];
-                        echo "</a>";
-                    }
+                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = $_SESSION['user_id']");
+                  while($row = $stmt->fetch()){
+                    echo "<a href=/profile.html?user=";
+                    echo $row['user_id'];
+                    echo "class='list-group-item list-group-item-action' aria-current='true'>";
+                    echo $row['display_name'];
+                    echo "</a>";
+                  }
                 ?>
             </div>
             <div class="col col-lg-2">
-                <?php 
-                    $stmt = $conn->query("SELECT DISTINCT accounts.user_id, accounts.username, accounts.display_name FROM accounts WHERE accounts.user_id == follows.user_id");
-                    $sql = "DELETE FROM follows WHERE follows.user_id = accounts.user_id";
-                    $delete = $dbh->prepare($sql);
-                    echo "<button type='button' class='btn btn-danger'>Remove</button>";
-                    $delete -> excute();
-                ?>
+              <?php 
+                function delete_follower(){
+                  $stmt = $conn->query("SELECT accounts.user_id, accounts.display_name FROM accounts INNER JOIN followers ON followers.follower_id = accounts.user_id WHERE followers.user_id = $_SESSION['user_id']");
+                  $sql = "DELETE FROM followers WHERE followers.user_id = $_SESSION['user_id']";
+                  $delete = $dbh->prepare($sql);
+                  $delete -> excute();
+                }
+              ?>
+              <button type='button' onclick="click_me2()" class='btn btn-danger'>Remove</button>
             </div>
           </div>
         </div>
+      </div>
     </div>
     <br>
   </body>
-
-
 </html>
+
