@@ -13,6 +13,17 @@ function db_connect() {
   return $dbconn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass, $options);
 }
 
+// get the username given an id
+function get_username($user_id) {
+  $dbconn = db_connect();
+
+  $pstmt = $dbconn->prepare("SELECT username FROM accounts WHERE user_id = :user_id");
+  $result = $pstmt->execute([':user_id' => $user_id]);
+  $user_data = $pstmt->fetch();
+
+  return $user_data['username'];
+}
+
 function add_tags(string $raw_tags, int $post_id) {
   $tags = get_tags($raw_tags);
   $conn = db_connect();
