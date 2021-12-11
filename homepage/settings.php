@@ -129,59 +129,41 @@
               <div class="list-group-item">
                 <div class="row align-items-center">
                   <div class="col">
-                    <strong class="mb-0">Change Display Name and Bio</strong>
-                    <?php
-                    /*
-                        $pstmt = $conn->prepare("UPDATE accounts WHERE user_id = :current_user_id");
-                        //$pstmt->execute([':current_user_id' => $current_user_id);
-                        $qry = mysqli_query($conn,"SELECT * FROM accounts WHERE user_id='$current_user_id'"); 
-                        $data = mysqli_fetch_array($qry); 
-                        if(isset($_POST['submit'])) 
-                        {
-                          $display_name = $_POST['display_name'];
-                          $edit = mysqli_query($conn,"Change your Display Name ='$display_name', where display_name ='$current_user_id'");
-                          if($edit)
-                          {
-                              mysqli_close($conn);
-                              exit;
-                          }   	
-                        }
-                      */
-                    ?>
+                    <strong class="mb-0">Change Display Name</strong>
                     <form action="" method="POST">
                       <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            value="<?php echo $accounts['display_name'] ?>" placeholder="Enter your new Display Name">
+                        <input class="form-control" type="text" name="display_name" placeholder="Enter your new Display Name">
                         <br>
                         <button type="submit" name="submit" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                        <?php
+                          if(isset($_POST['submit'])) 
+                          {
+                          $display_name = $_POST['display_name'];
+                          $current_user_id = $_SESSION['user_id'];
+                          $pstmt = $conn->prepare("UPDATE accounts SET display_name = :display_name WHERE user_id = :current_user_id");
+                          $pstmt->execute([':current_user_id' => $current_user_id, ':display_name' => $display_name]);
+                          }
+                        ?>
                       </div>
                     </form>
-                    <?php
-                    /*
-                        $pstmt = $conn->prepare("UPDATE accounts WHERE user_id = :current_user_id");
-                        //$pstmt->execute([':current_user_id' => $current_user_id);
-                        $bio = $_POST['bio'];
-                        $qry = mysqli_query($conn,"SELECT * FROM accounts WHERE user_id='$current_user_id'"); 
-                        $data = mysqli_fetch_array($qry); 
-                        if(isset($_POST['submit'])) 
-                        {
-                            $bio = $_POST['bio'];
-                            $edit = mysqli_query($conn,"Change your bio ='$bio', where bio='$current_user_id'");
-                            if($edit)
-                            {
-                                mysqli_close($conn);
-                                exit;
-                            }   	
-                        }
-                      */
-                    ?>
-                    <form>
+                    <br>
+                    <strong class="mb-0">Change Bio</strong>
+                    <form method="POST">
                         <div class="form-group">
                             <div class="form-outline">
-                                <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
-                                <label class="form-label" value="<?php echo $data['bio'] ?>" for="textAreaExample">Type in your new Bio here.</label>
+                                <textarea class="form-control" name="bio" id="textAreaExample" rows="4"></textarea>
+                                <label class="form-label" for="textAreaExample">(512 max characters)</label>
                             </div>
-                          <button type="submit" name="submit" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                          <button type="submit" name="submit1" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                          <?php
+                            if(isset($_POST['submit1'])) 
+                            {
+                            $bio = $_POST['bio'];
+                            $current_user_id = $_SESSION['user_id'];
+                            $pstmt = $conn->prepare("UPDATE accounts SET bio = :bio WHERE user_id = :current_user_id");
+                            $pstmt->execute([':current_user_id' => $current_user_id, ':bio' => $bio]);
+                            }
+                          ?>
                         </div>
                     </form>
                   </div>
@@ -191,7 +173,7 @@
 
 
 
-
+            <!-- Reset Password -->
             <div class="list-group mb-5 shadow">
               <div class="list-group-item">
                 <div class="row align-items-center">
@@ -199,37 +181,25 @@
                     <strong class="mb-0">Reset Password</strong>
                     <form action="" method="POST">
                       <div class="form-group">
-                        <label for="current-password">Current Password</label>
-                        <input type="email" class="form-control" id="current-password" aria-describedby="emailHelp"
-                          placeholder="Enter current password">
+                        <label for="old-password">Current Password</label>
+                            <input type="text" class="form-control" name="oldpassword" placeholder="Enter your current password">
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="new-password">New Password</label>
-                          <?php
-                          /*
-                            $pstmt = $conn->prepare("UPDATE accounts WHERE user_id = :current_user_id");
-                            //$pstmt->execute([':current_user_id' => $current_user_id);
-                            $password = $_POST['password'];
-                            $qry = mysqli_query($conn,"SELECT * FROM accounts WHERE password='$password'"); 
-                            $data = mysqli_fetch_array($qry); 
-                            if(isset($_POST['submit'])) 
-                            {
-                                $password = $_POST['password'];
-                                $edit = mysqli_query($conn,"Change your password ='$password', where password='$password'");
-                                if($edit)
-                                {
-                                    mysqli_close($conn); // Close connection
-                                    exit;
-                                }   	
-                            }
-                          */
-                          ?>
-                          <input type="password" class="form-control" id="new-password" placeholder="Enter your new password">
+                          <input type="text" class="form-control" name="password" placeholder="Enter your new password">
                       </div>
                       <br>
-                      <!-- Querey call to change Password upon clicking the button -->
-                      <button type="button" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                      <button type="submit2" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                      <?php
+                          if(isset($_POST['submit2'])) 
+                          {
+                          $password = $_POST['password'];
+                          $current_user_id = $_SESSION['user_id'];
+                          $pstmt = $conn->prepare("UPDATE accounts SET password = :password WHERE user_id = :current_user_id");
+                          $pstmt->execute([':current_user_id' => $current_user_id, ':password' => $password]);
+                          }
+                        ?>
                     </form>
                   </div>
                 </div>
@@ -258,25 +228,24 @@
                   <div class="col">
                     <strong class="mb-0">Profile Photo</strong>
                     <br>
-                    <form>
+                    <br>
+                    <form method="POST">
                       <div class="form-group">
-                        <label for="exampleFormControlFile1">Upload a new profile photo</label>
+                        <label for="profile_pic">Choose from device.</label>
                         <br>
-                        <?php
-                        /*
-                          $pstmt = $conn->prepare("UPDATE accounts WHERE user_id = :current_user_id");
-                          //$pstmt->execute([':current_user_id' => $current_user_id);
-                          $profile_pic = $_POST['profile_pic'];
-                          $qry = mysqli_query($conn,"INSERT INTO accounts WHERE accounts.profile_pic"); 
-                          $data = mysqli_fetch_array($qry); 
-                          if(isset($_POST['submit'])) 
-                            {
-                            echo "<input type='file' class='form-control-file' id='.$profile_pic.'";
-                        */
-                        ?>
+                        <input type="file" name="profile_pic" class="form-control-file" id="profile_pic">
                       </div>
                       <br>
-                      <button type="submit" name="submit" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                      <button type="submit3" class="btn btn-secondary btn-sm">Confirm Changes</button>
+                      <?php
+                          if(isset($_POST['submit3'])) 
+                          {
+                          $profile_pic = $_POST['profile_pic'];
+                          $current_user_id = $_SESSION['user_id'];
+                          $pstmt = $conn->prepare("UPDATE accounts SET profile_pic = :profile_pic WHERE user_id = :current_user_id");
+                          $pstmt->execute([':current_user_id' => $current_user_id, ':profile_pic' => $profile_pic]);
+                          }
+                        ?>
                     </form>
                   </div>
                 </div>
@@ -303,7 +272,7 @@
               <div class="list-group-item">
                 <div class="row align-items-center">
                   <div class="col">
-                    <!-- HTML Placeholder for future implementation of twitter connection -->
+                    <!-- HTML Placeholder for future implementation of twitter connection-->
                     <strong class="mb-0">Want to connect to Twitter? Enter a link to your account here!</strong>
                     <div class="form-group">
                       <input type="email" class="form-control" id="twitter-link" aria-describedby="emailHelp" placeholder="Enter link">
